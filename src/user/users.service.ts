@@ -1,9 +1,9 @@
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User, UserDocument } from '../schemas/user.schema';
-import { CreateUserDto } from '../dto/create-user.dto';
-import { CreateUserResponseDto } from '../dto/create-user-response.dto';
+import { User, UserDocument } from './schemas/user.schema';
+import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserResponseDto } from './dto/create-user-response.dto';
 
 type UserModel = Model<UserDocument>;
 
