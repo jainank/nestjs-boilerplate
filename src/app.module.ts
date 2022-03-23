@@ -27,7 +27,12 @@ const MONGODB_URI = 'mongo.uri';
 })
 export class AppModule {
   static port: number;
+  static isDev: boolean;
+  static host: string;
+
   constructor(private readonly configService: ConfigService) {
     AppModule.port = this.configService.get<number>('port');
+    AppModule.host = this.configService.get<string>('host');
+    AppModule.isDev = this.configService.get<string>('env') === 'development';
   }
 }
