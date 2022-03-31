@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './schemas/user.schema';
 import { CreateUserDto } from './dto/create-user.dto';
 import { CreateUserResponseDto } from './dto/create-user-response.dto';
+import * as bcrypt from 'bcrypt';
 
 type UserModel = Model<UserDocument>;
 
@@ -12,6 +13,8 @@ export class UsersService {
   constructor(@InjectModel(User.name) private readonly userModel: UserModel) {}
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
+    const hash = await bcrypt.hash(createUserDto.password, 10);
+    createUserDto.password = hash;
     const createdUser = await this.userModel.create(createUserDto);
     return createdUser;
   }
