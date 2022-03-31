@@ -1,8 +1,17 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { CreateUserResponseDto } from './dto/create-user-response.dto';
-import {User, UserDocument} from './schemas/user.schema';
+import { User } from './schemas/user.schema';
+import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 
 @Controller()
 export class UsersController {
@@ -14,6 +23,15 @@ export class UsersController {
   ): Promise<CreateUserResponseDto> {
     const user = await this.userService.createUser(createUser);
     return this.userService.transform(user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('user/:id')
+  async getProfile(
+    @Param('id') userId: string,
+    @Request() req,
+  ): Promise<CreateUserResponseDto> {
+    return req.user;
   }
 
   @Get('users')

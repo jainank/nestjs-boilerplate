@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from './configuration/configuration';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './user/users.module';
+import { AuthModule } from './auth/auth.module';
 
 const MONGODB_URI = 'mongo.uri';
 
@@ -21,6 +22,7 @@ const MONGODB_URI = 'mongo.uri';
       inject: [ConfigService],
     }),
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

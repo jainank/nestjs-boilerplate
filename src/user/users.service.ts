@@ -1,5 +1,5 @@
-import { Model } from 'mongoose';
-import { Injectable } from '@nestjs/common';
+import mongoose, { Model } from 'mongoose';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './schemas/user.schema';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -18,6 +18,25 @@ export class UsersService {
 
   async getAllUsers(): Promise<User[]> {
     return this.userModel.find().exec();
+  }
+
+  async getUser(id: string): Promise<User> {
+    let user: User;
+    if (mongoose.Types.ObjectId.isValid(id)) {
+      user = await this.userModel.findById(id).exec();
+    }
+    if (user) {
+      return user;
+    }
+    throw new HttpException('User does not exist', HttpStatus.NOT_FOUND);
+  }
+
+  async findOne(email: string): Promise<User> {
+    const user = await this.userModel.findOne({ email }).exec();
+    if (!user) {
+      throw new HttpException('Invalid credential', HttpStatus.UNAUTHORIZED);
+    }
+    return user;
   }
 
   transform(user: User): CreateUserResponseDto {
