@@ -1,10 +1,10 @@
 {
   "name": "nestjs-server",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
-  "private": true,
-  "license": "UNLICENSED",
+  "description": "NestJS boilerplate for building RESTful APIs",
+  "author": "Ankit Jain <ankitjain5019@gmail.com>",
+  "private": false,
+  "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
